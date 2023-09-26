@@ -60,8 +60,6 @@ contact: 'team@carpentries.org'
 # Order of episodes in your lesson
 episodes: 
 - 01-basics.md
-- 01a-shell-filedir.md
-- 01b-shell-create.md
 - 02-setup.md
 - 03-create.md
 - 04-changes.md
@@ -75,7 +73,6 @@ episodes:
 - 12-citation.md
 - 13-hosting.md
 - 14-supplemental-rstudio.md
-- 16-github-pages.md
 
 # Information for Learners
 learners: 
