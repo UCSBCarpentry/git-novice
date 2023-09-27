@@ -68,14 +68,9 @@ episodes:
 - 05-history.md
 - 06-ignore.md
 - 07-github.md
+- 07b-github-pages.md
 - 08-collab.md
 - 09-conflict.md
-- 10-open.md
-- 11-licensing.md
-- 12-citation.md
-- 13-hosting.md
-- 14-supplemental-rstudio.md
-- 16-github-pages.md
 
 # Information for Learners
 learners: 
