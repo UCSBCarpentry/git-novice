@@ -25,38 +25,40 @@ As we saw in the previous episode, we can refer to commits by their
 identifiers.  You can refer to the *most recent commit* of the working
 directory by using the identifier `HEAD`.
 
-We've been adding one line at a time to `mars.txt`, so it's easy to track our
+We've been adding one line at a time to ``, so it's easy to track our
 progress by looking, so let's do that using our `HEAD`s.  Before we start,
-let's make a change to `mars.txt`, adding yet another line.
+let's make a change to `index.md`, adding yet another line.
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano index.md
+$ cat index.md
 ```
 
-```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
-An ill-considered change
+```md
+# Seth Erickson
+
+I am a ___ at UCSB. My responsibilities include:
+
+- Carpentry Workshops
+- Teaching/Learning Git
 ```
 
 Now, let's see what we get.
 
 ```bash
-$ git diff HEAD mars.txt
+$ git diff HEAD index.md
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index b36abfd..0848c8d 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1,3 +1,4 @@
- Cold and dry, but everything is my favorite color
- The two moons may be a problem for Wolfman
- But the Mummy will appreciate the lack of humidity
-+An ill-considered change.
+diff --git a/index.md b/index.md
+index 22a33eb..e96b16e 100644
+--- a/index.md
++++ b/index.md
+@@ -3,3 +3,4 @@
+ I am a ___ at UCSB. My responsibilities include:
+ 
+ - Carpentry Workshops
++- Teaching/Leaning Git
 ```
 
 which is the same as what you would get if you leave out `HEAD` (try it).  The
@@ -66,26 +68,29 @@ that by adding `~1`
 to refer to the commit one before `HEAD`.
 
 ```bash
-$ git diff HEAD~1 mars.txt
+$ git diff HEAD~1 index.md
 ```
 
 If we want to see the differences between older commits we can use `git diff`
 again, but with the notation `HEAD~1`, `HEAD~2`, and so on, to refer to them:
 
 ```bash
-$ git diff HEAD~3 mars.txt
+$ git diff HEAD~2 index.md
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index df0654a..b36abfd 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1 +1,4 @@
- Cold and dry, but everything is my favorite color
-+The two moons may be a problem for Wolfman
-+But the Mummy will appreciate the lack of humidity
-+An ill-considered change
+diff --git a/index.md b/index.md
+index 7d781a7..e96b16e 100644
+--- a/index.md
++++ b/index.md
+@@ -1 +1,6 @@
+-I am a ___ at UCSB
++# Seth Erickson
++
++I am a ___ at UCSB. My responsibilities include:
++
++- Carpentry Workshops
++- Teaching/Leaning Git
 ```
 
 We could also use `git show` which shows us what changes we made at an older commit as
@@ -93,23 +98,23 @@ well as the commit message, rather than the *differences* between a commit and o
 working directory that we see by using `git diff`.
 
 ```bash
-$ git show HEAD~3 mars.txt
+$ git show HEAD~2 index.md
 ```
 
 ```output
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 09:51:46 2013 -0400
+commit 8defaab26aa641a4233896ec68e603c541aa77b4
+Author: ...
+Date:   Thu Oct 19 12:01:17 2023 -0400
 
-    Start notes on Mars as a base
+    add page
 
-diff --git a/mars.txt b/mars.txt
+diff --git a/index.md b/index.md
 new file mode 100644
-index 0000000..df0654a
+index 0000000..7d781a7
 --- /dev/null
-+++ b/mars.txt
++++ b/index.md
 @@ -0,0 +1 @@
-+Cold and dry, but everything is my favorite color
++I am a ___ at UCSB
 ```
 
 In this way,
@@ -128,23 +133,26 @@ and "unique" really does mean unique:
 every change to any set of files on any computer
 has a unique 40-character identifier.
 Our first commit was given the ID
-`f22b25e3233b4645dabd0d81e651fe074bd8e73b`,
+`8defaab26aa641a4233896ec68e603c541aa77b4`,
 so let's try this:
 
 ```bash
-$ git diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt
+$ git diff 8defaab26aa641a4233896ec68e603c541aa77b4 index.md
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index df0654a..93a3e13 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1 +1,4 @@
- Cold and dry, but everything is my favorite color
-+The two moons may be a problem for Wolfman
-+But the Mummy will appreciate the lack of humidity
-+An ill-considered change
+ddiff --git a/index.md b/index.md
+index 7d781a7..e96b16e 100644
+--- a/index.md
++++ b/index.md
+@@ -1 +1,6 @@
+-I am a ___ at UCSB
++# Seth Erickson
++
++I am a ___ at UCSB. My responsibilities include:
++
++- Carpentry Workshops
++- Teaching/Leaning Git
 ```
 
 That's the right answer,
@@ -152,26 +160,29 @@ but typing out random 40-character strings is annoying,
 so Git lets us use just the first few characters (typically seven for normal size projects):
 
 ```bash
-$ git diff f22b25e mars.txt
+$ git diff 8def index.md
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index df0654a..93a3e13 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1 +1,4 @@
- Cold and dry, but everything is my favorite color
-+The two moons may be a problem for Wolfman
-+But the Mummy will appreciate the lack of humidity
-+An ill-considered change
+diff --git a/index.md b/index.md
+index 7d781a7..e96b16e 100644
+--- a/index.md
++++ b/index.md
+@@ -1 +1,6 @@
+-I am a ___ at UCSB
++# Seth Erickson
++
++I am a ___ at UCSB. My responsibilities include:
++
++- Carpentry Workshops
++- Teaching/Leaning Git
 ```
 
 All right! So
 we can save changes to files and see what we've changed. Now, how
 can we restore older versions of things?
 Let's suppose we change our mind about the last update to
-`mars.txt` (the "ill-considered change").
+`index.md` (the "ill-considered change").
 
 `git status` now tells us that the file has been changed,
 but those changes haven't been staged:
@@ -186,7 +197,7 @@ Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git checkout -- <file>..." to discard changes in working directory)
 
-    modified:   mars.txt
+    modified:   index.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
@@ -195,14 +206,16 @@ We can put things back the way they were
 by using `git checkout`:
 
 ```bash
-$ git checkout HEAD mars.txt
-$ cat mars.txt
+$ git checkout HEAD index.md
+$ cat index.md
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
+# Seth Erickson
+
+I am a ___ at UCSB. My responsibilities include:
+
+- Carpentry Workshops
 ```
 
 As you might guess from its name,
@@ -214,15 +227,15 @@ If we want to go back even further,
 we can use a commit identifier instead:
 
 ```bash
-$ git checkout f22b25e mars.txt
+$ git checkout 8def index.md
 ```
 
 ```bash
-$ cat mars.txt
+$ cat index.md
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
+I am a ___ at UCSB
 ```
 
 ```bash
@@ -234,7 +247,7 @@ On branch main
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
-    modified:   mars.txt
+    modified:   index.md
 
 ```
 
@@ -243,7 +256,7 @@ Again, we can put things back the way they were
 by using `git checkout`:
 
 ```bash
-$ git checkout HEAD mars.txt
+$ git checkout HEAD index.md
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -253,13 +266,13 @@ $ git checkout HEAD mars.txt
 Above we used
 
 ```bash
-$ git checkout f22b25e mars.txt
+$ git checkout f22b25e index.md
 ```
 
-to revert `mars.txt` to its state after the commit `f22b25e`. But be careful!
+to revert `index.md` to its state after the commit `f22b25e`. But be careful!
 The command `checkout` has other important functionalities and Git will misunderstand
 your intentions if you are not accurate with the typing. For example,
-if you forget `mars.txt` in the previous command.
+if you forget `index.md` in the previous command.
 
 ```bash
 $ git checkout f22b25e
@@ -487,10 +500,10 @@ Venus is beautiful and full of love.
 
 ## Checking Understanding of `git diff`
 
-Consider this command: `git diff HEAD~9 mars.txt`. What do you predict this command
+Consider this command: `git diff HEAD~9 index.md`. What do you predict this command
 will do if you execute it? What happens when you do execute it? Why?
 
-Try another command, `git diff [ID] mars.txt`, where [ID] is replaced with
+Try another command, `git diff [ID] index.md`, where [ID] is replaced with
 the unique identifier for your most recent commit. What do you think will happen,
 and what does happen?
 
@@ -503,7 +516,7 @@ and what does happen?
 
 `git checkout` can be used to restore a previous commit when unstaged changes have
 been made, but will it also work for changes that have been staged but not committed?
-Make a change to `mars.txt`, add that change using `git add`,
+Make a change to `index.md`, add that change using `git add`,
 then use `git checkout` to see if you can remove your change.
 
 :::::::::::::::  solution
@@ -518,7 +531,7 @@ On branch main
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
 
-        modified:   mars.txt
+        modified:   index.md
 
 ```
 
@@ -526,18 +539,18 @@ Note that if you don't have the same output
 you may either have forgotten to change the file,
 or you have added it *and* committed it.
 
-Using the command `git checkout -- mars.txt` now does not give an error,
+Using the command `git checkout -- index.md` now does not give an error,
 but it does not restore the file either.
 Git helpfully tells us that we need to use `git reset` first
 to unstage the file:
 
 ```bash
-$ git reset HEAD mars.txt
+$ git reset HEAD index.md
 ```
 
 ```output
 Unstaged changes after reset:
-M	mars.txt
+M	index.md
 ```
 
 Now, `git status` gives us:
@@ -552,7 +565,7 @@ Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git checkout -- <file>..." to discard changes in working directory)
 
-        modified:   mars.txt
+        modified:   index.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
@@ -561,7 +574,7 @@ This means we can now use `git checkout` to restore the file
 to the previous commit:
 
 ```bash
-$ git checkout -- mars.txt
+$ git checkout -- index.md
 $ git status
 ```
 
@@ -581,16 +594,16 @@ nothing to commit, working tree clean
 Exploring history is an important part of Git, and often it is a challenge to find
 the right commit ID, especially if the commit is from several months ago.
 
-Imagine the `planets` project has more than 50 files.
-You would like to find a commit that modifies some specific text in `mars.txt`.
+Imagine the `simple-site` project has more than 50 files.
+You would like to find a commit that modifies some specific text in `index.md`.
 When you type `git log`, a very long list appeared.
 How can you narrow down the search?
 
 Recall that the `git diff` command allows us to explore one specific file,
-e.g., `git diff mars.txt`. We can apply a similar idea here.
+e.g., `git diff index.md`. We can apply a similar idea here.
 
 ```bash
-$ git log mars.txt
+$ git log index.md
 ```
 
 Unfortunately some of these commit messages are very ambiguous, e.g., `update files`.
@@ -601,7 +614,7 @@ for you.
 Is it possible to combine both? Let's try the following:
 
 ```bash
-$ git log --patch mars.txt
+$ git log --patch index.md
 ```
 
 You should get a long list of output, and you should be able to see both commit messages and

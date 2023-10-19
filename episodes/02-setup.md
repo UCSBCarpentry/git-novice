@@ -25,22 +25,19 @@ of configurations we will set as we get started with Git:
 - what our preferred text editor is,
 - and that we want to use these settings globally (i.e. for every project).
 
-On a command line, Git commands are written as `git verb options`,
-where `verb` is what we actually want to do and `options` is additional optional information which may be needed for the `verb`. So here is how
-Dracula sets up his new laptop:
+On a command line, Git commands are written as `git verb options`, where `verb`
+is what we actually want to do and `options` is additional optional information
+which may be needed for the `verb`. 
 
 ```bash
-$ git config --global user.name "Vlad Dracula"
-$ git config --global user.email "vlad@tran.sylvan.ia"
+$ git config --global user.name "Your Name"
+$ git config --global user.email "your@email.com"
 ```
 
-Please use your own name and email address instead of Dracula's. This user name and email will be associated with your subsequent Git activity,
-which means that any changes pushed to
-[GitHub](https://github.com/),
-[BitBucket](https://bitbucket.org/),
-[GitLab](https://gitlab.com/) or
-another Git host server
-after this lesson will include this information.
+This user name and email will be associated with your subsequent Git activity,
+which means that any changes pushed to [GitHub](https://github.com/),
+[BitBucket](https://bitbucket.org/), [GitLab](https://gitlab.com/) or another
+Git host server after this lesson will include this information.
 
 For this lesson, we will be interacting with [GitHub](https://github.com/) and so the email address used should be the same as the one used when setting up your GitHub account. If you are concerned about privacy, please review [GitHub's instructions for keeping your email address private][git-privacy].
 
@@ -84,7 +81,7 @@ $ git config --global core.autocrlf true
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Dracula also has to set his favorite text editor, following this table:
+Set the default text editor:
 
 | Editor                                | Configuration command | 
 | :-----------                          | :------------------------------ |
@@ -118,8 +115,7 @@ If you want to save your changes and quit, press <kbd>Esc</kbd> then type `:wq` 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Git (2.28+) allows configuration of the name of the branch created when you
-initialize any new repository.  Dracula decides to use that feature to set it to `main` so
-it matches the cloud service he will eventually use.
+initialize any new repository.
 
 ```bash
 $ git config --global init.defaultBranch main
@@ -129,13 +125,14 @@ $ git config --global init.defaultBranch main
 
 ## Default Git branch naming
 
-Source file changes are associated with a "branch."
-For new learners in this lesson, it's enough to know that branches exist, and this lesson uses one branch.  
-By default, Git will create a branch called `master`
-when you create a new repository with `git init` (as explained in the next Episode). This term evokes
-the racist practice of human slavery and the
-[software development community](https://github.com/github/renaming)  has moved to adopt
-more inclusive language.
+Source file changes are associated with a "branch." For new learners in this
+lesson, it's enough to know that branches exist, and this lesson uses one
+branch.  
+By default, Git will create a branch called `master` when you create a new
+repository with `git init` (as explained in the next Episode). This term evokes
+the racist practice of human slavery and the [software development
+community](https://github.com/github/renaming)  has moved to adopt more
+inclusive language.
 
 In 2020, most Git code hosting services transitioned to using `main` as the default
 branch. As an example, any new repository that is opened in GitHub and GitLab default

@@ -21,26 +21,46 @@ exercises: 0
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 First let's make sure we're still in the right directory.
-You should be in the `planets` directory.
+You should be in the `simple-site` directory.
 
 ```bash
-$ cd ~/Desktop/planets
+$ cd ~/Desktop/simple-site
 ```
 
-Let's create a file called `mars.txt` that contains some notes
-about the Red Planet's suitability as a base.
-We'll use `nano` to edit the file;
-you can use whatever editor you like.
-In particular, this does not have to be the `core.editor` you set globally earlier. But remember, the bash command to create or edit a new file will depend on the editor you choose (it might not be `nano`). For a refresher on text editors, check out ["Which Editor?"](https://swcarpentry.github.io/shell-novice/03-create.html#which-editor) in [The Unix Shell](https://swcarpentry.github.io/shell-novice/) lesson.
+
+Let's create a text file called `index.md` and add it to our repository. The
+file will later be converted into a webpage by GitHub pages. We'll write the
+file using a syntax called Markdown, which is why we use the `.md` extensions.
+
+:::::::::::::::::::::::::::::::::::::::::  callout
+
+## Markdown
+[Markdown](https://www.markdownguide.org/) is a language used to simplify writing HTML. Plain text characters
+like `#` and `*` are used in place of HTML tags. These characters are then
+processed (by GitHub pages) and transformed into HTML tags. As the name
+Markdown suggests, the language has been trimmed down to a minimum. The most
+frequently used elements, like headings, paragraphs, lists, tables and basic
+text formatting (i.e. bold, italic) are part of Markdown. Markdown’s
+simplified syntax keeps content human-readable.
+
+:::::::::::::::::::::::::::::::::::::::::
+
+We'll use `nano` to edit the file; you can use whatever editor you like. In
+particular, this does not have to be the `core.editor` you set globally earlier.
+But remember, the bash command to create or edit a new file will depend on the
+editor you choose (it might not be `nano`). For a refresher on text editors,
+check out ["Which
+Editor?"](https://swcarpentry.github.io/shell-novice/03-create.html#which-editor)
+in [The Unix Shell](https://swcarpentry.github.io/shell-novice/) lesson.
 
 ```bash
-$ nano mars.txt
+$ nano index.md
 ```
 
-Type the text below into the `mars.txt` file:
+Type the text below into the `index.md` file:
 
 ```output
-Cold and dry, but everything is my favorite color
+I am a ___ at UCSB
 ```
 
 Let's first verify that the file was properly created by running the list command (`ls`):
@@ -50,17 +70,17 @@ $ ls
 ```
 
 ```output
-mars.txt
+index.md
 ```
 
-`mars.txt` contains a single line, which we can see by running:
+`index.md` contains a single line, which we can see by running:
 
 ```bash
-$ cat mars.txt
+$ cat index.md
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
+I am a ___ at UCSB
 ```
 
 If we check the status of our project again,
@@ -78,7 +98,7 @@ No commits yet
 Untracked files:
    (use "git add <file>..." to include in what will be committed)
 
-	mars.txt
+	index.md
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
@@ -88,7 +108,7 @@ that Git isn't keeping track of.
 We can tell Git to track a file using `git add`:
 
 ```bash
-$ git add mars.txt
+$ git add index.md
 ```
 
 and then check that the right thing happened:
@@ -105,23 +125,23 @@ No commits yet
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 
-	new file:   mars.txt
+	new file:   index.md
 
 ```
 
-Git now knows that it's supposed to keep track of `mars.txt`,
+Git now knows that it's supposed to keep track of `index.md`,
 but it hasn't recorded these changes as a commit yet.
 To get it to do that,
 we need to run one more command:
 
 ```bash
-$ git commit -m "Start notes on Mars as a base"
+$ git commit -m "Start new webpage"
 ```
 
 ```output
-[main (root-commit) f22b25e] Start notes on Mars as a base
+[main (root-commit) f22b25e] Start new webpage
  1 file changed, 1 insertion(+)
- create mode 100644 mars.txt
+ create mode 100644 index.md
 ```
 
 When we run `git commit`,
@@ -161,10 +181,10 @@ $ git log
 
 ```output
 commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
+Author: ...
 Date:   Thu Aug 22 09:51:46 2013 -0400
 
-    Start notes on Mars as a base
+    Start new webpage
 ```
 
 `git log` lists all commits  made to a repository in reverse chronological order.
@@ -180,7 +200,7 @@ and the log message Git was given when the commit was created.
 
 ## Where Are My Changes?
 
-If we run `ls` at this point, we will still see just one file called `mars.txt`.
+If we run `ls` at this point, we will still see just one file called `index.md`.
 That's because Git saves information about files' history
 in the special `.git` directory mentioned earlier
 so that our filesystem doesn't become cluttered
@@ -189,18 +209,19 @@ so that our filesystem doesn't become cluttered
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Now suppose Dracula adds more information to the file.
+Let's adds more information to the file.
 (Again, we'll edit with `nano` and then `cat` the file to show its contents;
 you may use a different editor, and don't need to `cat`.)
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano index.md
+$ cat index.md
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
+# Your Name
+
+I am a ___ at UCSB
 ```
 
 When we run `git status` now,
@@ -216,7 +237,7 @@ Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git checkout -- <file>..." to discard changes in working directory)
 
-	modified:   mars.txt
+	modified:   index.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
@@ -237,13 +258,14 @@ $ git diff
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index df0654a..315bf3a 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1 +1,2 @@
- Cold and dry, but everything is my favorite color
-+The two moons may be a problem for Wolfman
+diff --git a/index.md b/index.md
+index 7d781a7..bbb33fe 100644
+--- a/index.md
++++ b/index.md
+@@ -1 +1,3 @@
++# Your Name
++
+ I am a ___ at UCSB
 ```
 
 The output is cryptic because
@@ -255,7 +277,7 @@ If we break it down into pieces:
   comparing the old and new versions of the file.
 2. The second line tells exactly which versions of the file
   Git is comparing;
-  `df0654a` and `315bf3a` are unique computer-generated labels for those versions.
+  `7d781a7` and `bbb33fe` are unique computer-generated labels for those versions.
 3. The third and fourth lines once again show the name of the file being changed.
 4. The remaining lines are the most interesting, they show us the actual differences
   and the lines on which they occur.
@@ -265,7 +287,7 @@ If we break it down into pieces:
 After reviewing our change, it's time to commit it:
 
 ```bash
-$ git commit -m "Add concerns about effects of Mars' moons on Wolfman"
+$ git commit -m "Add header"
 ```
 
 ```output
@@ -274,7 +296,7 @@ Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git checkout -- <file>..." to discard changes in working directory)
 
-	modified:   mars.txt
+	modified:   index.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
@@ -284,13 +306,13 @@ Git won't commit because we didn't use `git add` first.
 Let's fix that:
 
 ```bash
-$ git add mars.txt
-$ git commit -m "Add concerns about effects of Mars' moons on Wolfman"
+$ git add index.md
+$ git commit -m "Add header"
 ```
 
 ```output
-[main 34961b1] Add concerns about effects of Mars' moons on Wolfman
- 1 file changed, 1 insertion(+)
+[main 019f377] add header
+ 1 file changed, 2 insertions(+)
 ```
 
 Git insists that we add files to the set we want to commit
@@ -343,14 +365,16 @@ First,
 we'll add another line to the file:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano index.md
+$ cat index.md
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
+# Your Name
+
+I am a ___ at UCSB. My responsibilities include:
+
+- Carpentry Workshops
 ```
 
 ```bash
@@ -358,14 +382,17 @@ $ git diff
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index 315bf3a..b36abfd 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1,2 +1,3 @@
- Cold and dry, but everything is my favorite color
- The two moons may be a problem for Wolfman
-+But the Mummy will appreciate the lack of humidity
+diff --git a/index.md b/index.md
+index bbb33fe..22a33eb 100644
+--- a/index.md
++++ b/index.md
+@@ -1,3 +1,5 @@
+ # Your Name
+ 
+-I am a ___ at UCSB
++I am a ___ at UCSB. My responsibilities include:
++
++- Carpentry Workshops
 ```
 
 So far, so good:
@@ -375,7 +402,7 @@ Now let's put that change in the staging area
 and see what `git diff` reports:
 
 ```bash
-$ git add mars.txt
+$ git add index.md
 $ git diff
 ```
 
@@ -391,14 +418,17 @@ $ git diff --staged
 ```
 
 ```output
-diff --git a/mars.txt b/mars.txt
-index 315bf3a..b36abfd 100644
---- a/mars.txt
-+++ b/mars.txt
-@@ -1,2 +1,3 @@
- Cold and dry, but everything is my favorite color
- The two moons may be a problem for Wolfman
-+But the Mummy will appreciate the lack of humidity
+diff --git a/index.md b/index.md
+index bbb33fe..22a33eb 100644
+--- a/index.md
++++ b/index.md
+@@ -1,3 +1,5 @@
+ # Your Name
+ 
+-I am a ___ at UCSB
++I am a ___ at UCSB. My responsibilities include:
++
++- Carpentry Workshops
 ```
 
 it shows us the difference between
@@ -407,12 +437,12 @@ and what's in the staging area.
 Let's save our changes:
 
 ```bash
-$ git commit -m "Discuss concerns about Mars' climate for Mummy"
+$ git commit -m "add responsibilities"
 ```
 
 ```output
-[main 005937f] Discuss concerns about Mars' climate for Mummy
- 1 file changed, 1 insertion(+)
+[main d11d7e5] add responsibilities
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 ```
 
 check our status:
@@ -433,23 +463,23 @@ $ git log
 ```
 
 ```output
-commit 005937fbe2a98fb83f0ade869025dc2636b4dad5 (HEAD -> main)
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 10:14:07 2013 -0400
+commit d11d7e52ab98d3d4c18cde4c4a0bbeea3fe40983 (HEAD -> main)
+Author: ...
+Date:   Thu Oct 19 12:07:51 2023 -0400
 
-    Discuss concerns about Mars' climate for Mummy
+    add responsibilities
 
-commit 34961b159c27df3b475cfe4415d94a6d1fcd064d
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 10:07:21 2013 -0400
+commit 019f37773f9f18b77f508990df65e56a34df45de
+Author: ...
+Date:   Thu Oct 19 12:03:04 2023 -0400
 
-    Add concerns about effects of Mars' moons on Wolfman
+    add header
 
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 09:51:46 2013 -0400
+commit 8defaab26aa641a4233896ec68e603c541aa77b4
+Author: ...
+Date:   Thu Oct 19 12:01:17 2023 -0400
 
-    Start notes on Mars as a base
+    add page
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -497,11 +527,11 @@ $ git log -1
 ```
 
 ```output
-commit 005937fbe2a98fb83f0ade869025dc2636b4dad5 (HEAD -> main)
-Author: Vlad Dracula <vlad@tran.sylvan.ia>
-Date:   Thu Aug 22 10:14:07 2013 -0400
+commit d11d7e52ab98d3d4c18cde4c4a0bbeea3fe40983 (HEAD -> main)
+Author: ...
+Date:   Thu Oct 19 12:07:51 2023 -0400
 
-   Discuss concerns about Mars' climate for Mummy
+    add responsibilities
 ```
 
 You can also reduce the quantity of information using the
@@ -512,9 +542,9 @@ $ git log --oneline
 ```
 
 ```output
-005937f (HEAD -> main) Discuss concerns about Mars' climate for Mummy
-34961b1 Add concerns about effects of Mars' moons on Wolfman
-f22b25e Start notes on Mars as a base
+d11d7e5 (HEAD -> main) add responsibilities
+019f377 add header
+8defaab add page
 ```
 
 You can also combine the `--oneline` option with others. One useful
@@ -528,9 +558,9 @@ $ git log --oneline --graph
 ```
 
 ```output
-* 005937f (HEAD -> main) Discuss concerns about Mars' climate for Mummy
-* 34961b1 Add concerns about effects of Mars' moons on Wolfman
-* f22b25e Start notes on Mars as a base
+* d11d7e5 (HEAD -> main) add responsibilities
+* 019f377 add header
+* 8defaab add page
 ```
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -594,10 +624,10 @@ repository (`git commit`):
 ## Choosing a Commit Message
 
 Which of the following commit messages would be most appropriate for the
-last commit made to `mars.txt`?
+last commit made to `index.md`?
 
 1. "Changes"
-2. "Added line 'But the Mummy will appreciate the lack of humidity' to mars.txt"
+2. "Added line 'But the Mummy will appreciate the lack of humidity' to index.md"
 3. "Discuss effects of Mars' climate on the Mummy"
 
 :::::::::::::::  solution
@@ -658,7 +688,7 @@ to my local Git repository?
 The staging area can hold changes from any number of files
 that you want to commit as a single snapshot.
 
-1. Add some text to `mars.txt` noting your decision
+1. Add some text to `index.md` noting your decision
   to consider Venus as a base
 2. Create a new file `venus.txt` with your initial thoughts
   about Venus as a base for you and your friends
@@ -669,14 +699,14 @@ that you want to commit as a single snapshot.
 
 ## Solution
 
-The output below from `cat mars.txt` reflects only content added during
+The output below from `cat index.md` reflects only content added during
 this exercise. Your output may vary.
 
-First we make our changes to the `mars.txt` and `venus.txt` files:
+First we make our changes to the `index.md` and `venus.txt` files:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano index.md
+$ cat index.md
 ```
 
 ```output
@@ -695,13 +725,13 @@ Venus is a nice planet and I definitely should consider it as a base.
 Now you can add both files to the staging area. We can do that in one line:
 
 ```bash
-$ git add mars.txt venus.txt
+$ git add index.md venus.txt
 ```
 
 Or with multiple commands:
 
 ```bash
-$ git add mars.txt
+$ git add index.md
 $ git add venus.txt
 ```
 
@@ -737,7 +767,7 @@ $ git commit -m "Write plans to start a base on Venus"
 
 ## Solution
 
-If needed, move out of the `planets` folder:
+If needed, move out of the `simple-site` folder:
 
 ```bash
 $ cd ..
