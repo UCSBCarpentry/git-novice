@@ -35,7 +35,7 @@ $ cat index.md
 ```
 
 ```md
-# Seth Erickson
+# Your Name
 
 I am a ___ at UCSB. My responsibilities include:
 
