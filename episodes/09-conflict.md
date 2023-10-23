@@ -25,11 +25,11 @@ different changes to each copy.  Version control helps us manage these
 [resolve](../learners/reference.md#resolve) overlapping changes.
 
 To see how we can resolve conflicts, we must first create one.  The file
-`mars.txt` currently looks like this in both partners' copies of our `planets`
+`_config.yml` currently looks like this in both partners' copies of our `simple-site`
 repository:
 
 ```bash
-$ cat mars.txt
+$ cat _config.yml
 ```
 
 ```output
@@ -41,21 +41,20 @@ But the Mummy will appreciate the lack of humidity
 Let's add a line to the collaborator's copy only:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano _config.yml
+$ cat _config.yml
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
-This line added to Wolfman's copy
+theme: minima
+title: YOUR NAME
+description: My personal website
 ```
 
 and then push the change to GitHub:
 
 ```bash
-$ git add mars.txt
+$ git add _config.yml
 $ git commit -m "Add a line in our home copy"
 ```
 
@@ -76,7 +75,7 @@ Compressing objects: 100% (3/3), done.
 Writing objects: 100% (3/3), 331 bytes | 331.00 KiB/s, done.
 Total 3 (delta 2), reused 0 (delta 0)
 remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https://github.com/vlad/planets.git
+To https://github.com/vlad/simple-site.git
    29aba7c..dabb4c8  main -> main
 ```
 
@@ -85,21 +84,20 @@ make a different change to their copy
 *without* updating from GitHub:
 
 ```bash
-$ nano mars.txt
-$ cat mars.txt
+$ nano _config.yml
+$ cat _config.yml
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
-We added a different line in the other copy
+theme: minima
+title: YOUR NAME
+description: work and projects
 ```
 
 We can commit the change locally:
 
 ```bash
-$ git add mars.txt
+$ git add _config.yml
 $ git commit -m "Add a line in my copy"
 ```
 
@@ -115,9 +113,9 @@ $ git push origin main
 ```
 
 ```output
-To https://github.com/vlad/planets.git
+To https://github.com/vlad/simple-site.git
  ! [rejected]        main -> main (fetch first)
-error: failed to push some refs to 'https://github.com/vlad/planets.git'
+error: failed to push some refs to 'https://github.com/vlad/simple-site.git'
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
@@ -143,11 +141,11 @@ remote: Counting objects: 100% (5/5), done.
 remote: Compressing objects: 100% (1/1), done.
 remote: Total 3 (delta 2), reused 3 (delta 2), pack-reused 0
 Unpacking objects: 100% (3/3), done.
-From https://github.com/vlad/planets
+From https://github.com/vlad/simple-site
  * branch            main     -> FETCH_HEAD
     29aba7c..dabb4c8  main     -> origin/main
-Auto-merging mars.txt
-CONFLICT (content): Merge conflict in mars.txt
+Auto-merging _config.yml
+CONFLICT (content): Merge conflict in _config.yml
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
@@ -159,17 +157,16 @@ stop us from trampling on our previous work. The conflict is marked in
 in the affected file:
 
 ```bash
-$ cat mars.txt
+$ cat _config.yml
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
+theme: minima
+title: YOUR NAME
 <<<<<<< HEAD
-We added a different line in the other copy
+description: My personal website
 =======
-This line added to Wolfman's copy
+description: work and projects
 >>>>>>> dabb4c8c450e8475aee9b14b4383acc99f42af1d
 ```
 
@@ -187,22 +184,21 @@ or get rid of the change entirely.
 Let's replace both so that the file looks like this:
 
 ```bash
-$ cat mars.txt
+$ cat _config.yml
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
-We removed the conflict on this line
+theme: minima
+title: YOUR NAME
+description: My work and projects
 ```
 
 To finish merging,
-we add `mars.txt` to the changes being made by the merge
+we add `_config.yml` to the changes being made by the merge
 and then commit:
 
 ```bash
-$ git add mars.txt
+$ git add _config.yml
 $ git status
 ```
 
@@ -213,7 +209,7 @@ All conflicts fixed but you are still merging.
 
 Changes to be committed:
 
-	modified:   mars.txt
+	modified:   _config.yml
 
 ```
 
@@ -239,7 +235,7 @@ Compressing objects: 100% (6/6), done.
 Writing objects: 100% (6/6), 645 bytes | 645.00 KiB/s, done.
 Total 6 (delta 4), reused 0 (delta 0)
 remote: Resolving deltas: 100% (4/4), completed with 2 local objects.
-To https://github.com/vlad/planets.git
+To https://github.com/vlad/simple-site.git
    dabb4c8..2abf2b1  main -> main
 ```
 
@@ -257,26 +253,25 @@ remote: Counting objects: 100% (10/10), done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 6 (delta 4), reused 6 (delta 4), pack-reused 0
 Unpacking objects: 100% (6/6), done.
-From https://github.com/vlad/planets
+From https://github.com/vlad/simple-site
  * branch            main     -> FETCH_HEAD
     dabb4c8..2abf2b1  main     -> origin/main
 Updating dabb4c8..2abf2b1
 Fast-forward
- mars.txt | 2 +-
+ _config.yml | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 ```
 
 We get the merged file:
 
 ```bash
-$ cat mars.txt
+$ cat _config.yml
 ```
 
 ```output
-Cold and dry, but everything is my favorite color
-The two moons may be a problem for Wolfman
-But the Mummy will appreciate the lack of humidity
-We removed the conflict on this line
+theme: minima
+title: YOUR NAME
+description: My work and projects
 ```
 
 We don't need to merge again because Git knows someone has already done that.
@@ -368,9 +363,9 @@ $ git push origin main
 ```
 
 ```output
-To https://github.com/vlad/planets.git
+To https://github.com/vlad/simple-site.git
  ! [rejected]        main -> main (fetch first)
-error: failed to push some refs to 'https://github.com/vlad/planets.git'
+error: failed to push some refs to 'https://github.com/vlad/simple-site.git'
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
@@ -393,7 +388,7 @@ remote: Counting objects: 3, done.
 remote: Compressing objects: 100% (3/3), done.
 remote: Total 3 (delta 0), reused 0 (delta 0)
 Unpacking objects: 100% (3/3), done.
-From https://github.com/vlad/planets.git
+From https://github.com/vlad/simple-site.git
  * branch            main     -> FETCH_HEAD
    6a67967..439dc8c  main     -> origin/main
 warning: Cannot merge binary files: mars.jpg (HEAD vs. 439dc8c08869c342438f6dc4a2b615b05b93c76e)
@@ -402,7 +397,7 @@ CONFLICT (add/add): Merge conflict in mars.jpg
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-The conflict message here is mostly the same as it was for `mars.txt`, but
+The conflict message here is mostly the same as it was for `_config.yml`, but
 there is one key additional line:
 
 ```output

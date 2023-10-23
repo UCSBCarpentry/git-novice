@@ -312,6 +312,26 @@ the 'About' page directly.
 :::::::::::::::::::::::::::::::::::::::
 
 
+## Adding a Theme
+
+We can configure out site by adding a new file `_config.yml`. Let's add a basic theme:
+
+```sh
+$ nano _config.yml
+$ cat _config.yml
+```
+
+```output
+theme: minima
+title: YOUR NAME
+```
+
+We also need to commit the file and push it to GitHub:
+
+```sh
+git commit -a -m "add site config"
+git push origin main
+```
 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
