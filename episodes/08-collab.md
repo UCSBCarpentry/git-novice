@@ -48,21 +48,21 @@ or check for email notification. Once there she can accept access to the Owner's
 Next, the Collaborator needs to download a copy of the Owner's repository to her
 machine. This is called "cloning a repo".
 
-The Collaborator doesn't want to overwrite her own version of `planets.git`, so
+The Collaborator doesn't want to overwrite her own version of `simple-site.git`, so
 needs to clone the Owner's repository to a different location than her own
 repository with the same name.
 
 To clone the Owner's repo into her `Desktop` folder, the Collaborator enters:
 
 ```bash
-$ git clone git@github.com:vlad/planets.git ~/Desktop/vlad-planets
+$ git clone git@github.com:vlad/simple-site.git ~/Desktop/vlad-simple-site
 ```
 
 Replace 'vlad' with the Owner's username.
 
 If you choose to clone without the clone path
-(`~/Desktop/vlad-planets`) specified at the end,
-you will clone inside your own planets folder!
+(`~/Desktop/vlad-simple-site`) specified at the end,
+you will clone inside your own simple-site folder!
 Make sure to navigate to the `Desktop` folder first.
 
 ![](fig/github-collaboration.svg){alt='After Creating Clone of Repository'}
@@ -71,23 +71,34 @@ The Collaborator can now make a change in her clone of the Owner's repository,
 exactly the same way as we've been doing before:
 
 ```bash
-$ cd ~/Desktop/vlad-planets
-$ nano pluto.txt
-$ cat pluto.txt
+$ cd ~/Desktop/vlad-simple-site
+$ nano index.md
+$ cat index.md
 ```
 
 ```output
-It is so a planet!
+---
+title: "Our Team"
+---
+
+[Name] is a __ at UCSB. Their responsibilities include:
+
+- Carpentry Workshops
+
+[Name] is a ___ at UCSB. Their responsibilities include: 
+
+- Learning Git
+
 ```
 
 ```bash
-$ git add pluto.txt
-$ git commit -m "Add notes about Pluto"
+$ git add index.md
+$ git commit -m "Add notes"
 ```
 
 ```output
  1 file changed, 1 insertion(+)
- create mode 100644 pluto.txt
+ create mode 100644 index.md
 ```
 
 Then push the change to the *Owner's repository* on GitHub:
@@ -103,7 +114,7 @@ Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
 Writing objects: 100% (3/3), 306 bytes, done.
 Total 3 (delta 0), reused 0 (delta 0)
-To https://github.com/vlad/planets.git
+To https://github.com/vlad/simple-site.git
    9272da5..29aba7c  main -> main
 ```
 
@@ -163,14 +174,14 @@ remote: Counting objects: 100% (4/4), done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
 Unpacking objects: 100% (3/3), done.
-From https://github.com/vlad/planets
+From https://github.com/vlad/simple-site
  * branch            main     -> FETCH_HEAD
    9272da5..29aba7c  main     -> origin/main
 Updating 9272da5..29aba7c
 Fast-forward
- pluto.txt | 1 +
+ index.md | 1 +
  1 file changed, 1 insertion(+)
- create mode 100644 pluto.txt
+ create mode 100644 index.md
 ```
 
 Now the three repositories (Owner's local, Collaborator's local, and Owner's on

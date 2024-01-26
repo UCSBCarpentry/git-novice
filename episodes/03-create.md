@@ -17,35 +17,19 @@ exercises: 0
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Once Git is configured,
-we can start using it.
-
-We will continue with the story of Wolfman and Dracula who are investigating if it
-is possible to send a planetary lander to Mars.
-
-![](fig/motivatingexample.png){alt='motivatingexample'}
-[Werewolf vs dracula](https://www.deviantart.com/b-maze/art/Werewolf-vs-Dracula-124893530)
-by [b-maze](https://www.deviantart.com/b-maze) / [Deviant Art](https://www.deviantart.com/).
-[Mars](https://en.wikipedia.org/wiki/File:OSIRIS_Mars_true_color.jpg) by European Space Agency /
-[CC-BY-SA 3.0 IGO](https://creativecommons.org/licenses/by/3.0/deed.en).
-[Pluto](https://commons.wikimedia.org/wiki/File:PIA19873-Pluto-NewHorizons-FlyingPastImage-20150714-transparent.png) /
-Courtesy NASA/JPL-Caltech.
-[Mummy](https://commons.wikimedia.org/wiki/File:Mummy_icon_-_Noun_Project_4070.svg)
-© Gilad Fried / [The Noun Project](https://thenounproject.com/) /
-[CC BY 3.0](https://creativecommons.org/licenses/by/3.0/deed.en).
-[Moon](https://commons.wikimedia.org/wiki/File:Lune_ico.png)
-© Luc Viatour / [https://lucnix.be](https://lucnix.be/) /
-[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en).
+Once Git is configured, we can start using it. Let's imagine we want to 
+create a simple web page about our work. We can track revisions to the page
+using git and, later, publish it using GitHub pages.
 
 First, let's create a new directory in the `Desktop` folder for our work and then change the current working directory to the newly created one:
 
 ```bash
 $ cd ~/Desktop
-$ mkdir planets
-$ cd planets
+$ mkdir simple-site
+$ cd simple-site
 ```
 
-Then we tell Git to make `planets` a [repository](../learners/reference.md#repository)
+Then we tell Git to make `simple-site` a [repository](../learners/reference.md#repository)
 \-- a place where Git can store versions of our files:
 
 ```bash
@@ -54,9 +38,9 @@ $ git init
 
 It is important to note that `git init` will create a repository that
 can include subdirectories and their files---there is no need to create
-separate repositories nested within the `planets` repository, whether
+separate repositories nested within the `simple-site` repository, whether
 subdirectories are present from the beginning or added later. Also, note
-that the creation of the `planets` directory and its initialization as a
+that the creation of the `simple-site` directory and its initialization as a
 repository are completely separate processes.
 
 If we use `ls` to show the directory's contents,
@@ -67,7 +51,7 @@ $ ls
 ```
 
 But if we add the `-a` flag to show everything,
-we can see that Git has created a hidden directory within `planets` called `.git`:
+we can see that Git has created a hidden directory within `simple-site` called `.git`:
 
 ```bash
 $ ls -a
@@ -117,41 +101,35 @@ wording of the output might be slightly different.
 
 ## Places to Create Git Repositories
 
-Along with tracking information about planets (the project we have already created),
-Dracula would also like to track information about moons.
-Despite Wolfman's concerns, Dracula creates a `moons` project inside his `planets`
-project with the following sequence of commands:
+Imagine you create a directory for your website images:
 
 ```bash
 $ cd ~/Desktop   # return to Desktop directory
-$ cd planets     # go into planets directory, which is already a Git repository
-$ ls -a          # ensure the .git subdirectory is still present in the planets directory
-$ mkdir moons    # make a subdirectory planets/moons
-$ cd moons       # go into moons subdirectory
-$ git init       # make the moons subdirectory a Git repository
+$ cd simple-site # go into simple-site directory, which is already a Git repository
+$ ls -a          # ensure the .git subdirectory is still present in the simple-site directory
+$ mkdir images    # make a subdirectory simple-site/images
+$ cd images       # go into images subdirectory
+$ git init       # make the images subdirectory a Git repository
 $ ls -a          # ensure the .git subdirectory is present indicating we have created a new Git repository
 ```
 
-Is the `git init` command, run inside the `moons` subdirectory, required for
-tracking files stored in the `moons` subdirectory?
+Is the `git init` command, run inside the `images` subdirectory, required for
+tracking files stored in the `images` subdirectory?
 
 :::::::::::::::  solution
 
 ## Solution
 
-No. Dracula does not need to make the `moons` subdirectory a Git repository
-because the `planets` repository can track any files, sub-directories, and
-subdirectory files under the `planets` directory.  Thus, in order to track
-all information about moons, Dracula only needed to add the `moons` subdirectory
-to the `planets` directory.
+You don't need to make the `images` subdirectory a Git repository because the
+`simple-site` repository can track any files, sub-directories, and subdirectory
+files under the `simple-site` directory. 
 
-Additionally, Git repositories can interfere with each other if they are "nested":
-the outer repository will try to version-control
-the inner repository. Therefore, it's best to create each new Git
-repository in a separate directory. To be sure that there is no conflicting
-repository in the directory, check the output of `git status`. If it looks
-like the following, you are good to go to create a new repository as shown
-above:
+Additionally, Git repositories can interfere with each other if they are
+"nested": the outer repository will try to version-control the inner repository.
+Therefore, it's best to create each new Git repository in a separate directory.
+To be sure that there is no conflicting repository in the directory, check the
+output of `git status`. If it looks like the following, you are good to go to
+create a new repository as shown above:
 
 ```bash
 $ git status
@@ -165,9 +143,7 @@ fatal: Not a git repository (or any of the parent directories): .git
 
 ## Correcting `git init` Mistakes
 
-Wolfman explains to Dracula how a nested repository is redundant and may cause confusion
-down the road. Dracula would like to remove the nested repository. How can Dracula undo
-his last `git init` in the `moons` subdirectory?
+Can you undo the last `git init` in the `images` subdirectory?
 
 :::::::::::::::  solution
 
@@ -189,18 +165,17 @@ becomes another change that we will need to track, as we will see in the next ep
 
 ### Solution
 
-Git keeps all of its files in the `.git` directory.
-To recover from this little mistake, Dracula can just remove the `.git`
-folder in the moons subdirectory by running the following command from inside the `planets` directory:
+Git keeps all of its files in the `.git` directory. To recover from this little
+mistake, you can just remove the `.git` folder in the images subdirectory by
+running the following command from inside the `simple-site` directory:
 
 ```bash
-$ rm -rf moons/.git
+$ rm -rf images/.git
 ```
 
 But be careful! Running this command in the wrong directory will remove
 the entire Git history of a project you might want to keep.
 Therefore, always check your current directory using the command `pwd`.
-
 
 
 :::::::::::::::::::::::::
